@@ -1,10 +1,11 @@
-FROM node:12-alpine3.10
+FROM node:12.18.3-alpine3.10
 
 WORKDIR /app
 
 COPY package.json /app
+COPY package-lock.json /app
 
-RUN npm install
+RUN npm install --silent
 
 COPY . /app
 
