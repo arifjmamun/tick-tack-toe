@@ -1,14 +1,24 @@
 import { Reducer } from "redux";
+import { v4 as uuidv4 } from "uuid";
 import * as _ from "lodash";
 
 import { Player } from "../types/player";
 import { Board } from "../types/board";
-import { Action, ActionType } from "../actions/actionType";
+import { ActionLog } from "./../models/action-log.model";
+import {
+  PlayerAction,
+  ActionType,
+  AddedActionLogAction,
+  LoadedActionLogsAction,
+} from "../actions/actionType";
 import { AddMove } from "../actions/addMove";
 import { getPlayerResult } from "../utils/helper";
 import { Move } from "../types/move";
 
 export interface State {
+  sessionId: string;
+  loading: boolean;
+  actionLogs: ActionLog[];
   board: Board;
   won: Player | undefined;
   wonLine: string | undefined;
@@ -17,6 +27,8 @@ export interface State {
 }
 
 export const initialState: State = {
+  sessionId: uuidv4(),
+  loading: false,
   board: {
     0: [Move.Blank, Move.Blank, Move.Blank],
     1: [Move.Blank, Move.Blank, Move.Blank],
@@ -26,9 +38,13 @@ export const initialState: State = {
   wonLine: undefined,
   draw: false,
   turn: Player.O,
+  actionLogs: [],
 };
 
-export const playerReducer: Reducer<State, Action> = (state = initialState, action: Action): State => {
+export const playerReducer: Reducer<State, PlayerAction> = (
+  state: State = initialState,
+  action: PlayerAction
+): State => {
   switch (action.type) {
     case ActionType.ADD_MOVE:
       const { row, position, playerMove } = action as AddMove;
@@ -61,8 +77,19 @@ export const playerReducer: Reducer<State, Action> = (state = initialState, acti
         newState.draw = true;
       }
       return newState;
+    case ActionType.ADD_ACTION_LOG:
+      return { ...state, loading: true };
+    case ActionType.ADDED_ACTION_LOG:
+      const { actionLog } = action as AddedActionLogAction;
+      const logs = [actionLog].concat(state.actionLogs);
+      return { ...state, loading: false, actionLogs: logs};
+    case ActionType.LOADING_ACTION_LOGS:
+        return { ...state, loading: true };
+    case ActionType.LOADED_ACTION_LOGS:
+        const { actionLogs } = action as LoadedActionLogsAction;
+        return { ...state, loading: false, actionLogs };
     case ActionType.START_OVER:
-      return initialState;
+      return { ...initialState, sessionId: uuidv4() };
     default:
       return state;
   }

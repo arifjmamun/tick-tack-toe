@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import { playerReducer, State, initialState } from "./player-reducer";
 import { Move } from "../types/move";
 import { Player } from "../types/player";
@@ -5,6 +7,8 @@ import { ActionType } from "../actions/actionType";
 
 it("Should add a move at given position and change turn", () => {
   const state: State = {
+    sessionId: uuidv4(),
+    loading: false,
     board: {
       0: [Move.Blank, Move.Blank, Move.Blank],
       1: [Move.Blank, Move.Blank, Move.Blank],
@@ -14,7 +18,9 @@ it("Should add a move at given position and change turn", () => {
     wonLine: undefined,
     draw: false,
     turn: Player.O,
+    actionLogs: [],
   };
+
   const nextState = playerReducer(state, {
     type: ActionType.ADD_MOVE,
     playerMove: Move.O,
@@ -27,6 +33,8 @@ it("Should add a move at given position and change turn", () => {
 
 it('Should set "won" move when a winning line is set', () => {
   const state: State = {
+    sessionId: uuidv4(),
+    loading: false,
     board: {
       0: [Move.X, Move.O, Move.Blank],
       1: [Move.Blank, Move.X, Move.Blank],
@@ -36,6 +44,7 @@ it('Should set "won" move when a winning line is set', () => {
     wonLine: undefined,
     draw: false,
     turn: Player.X,
+    actionLogs: []
   };
   const nextState = playerReducer(state, {
     type: ActionType.ADD_MOVE,
@@ -48,6 +57,8 @@ it('Should set "won" move when a winning line is set', () => {
 
 it("Should reset the state to initial", () => {
   const state: State = {
+    sessionId: uuidv4(),
+    loading: false,
     board: {
       0: [Move.X, Move.O, Move.Blank],
       1: [Move.Blank, Move.X, Move.Blank],
@@ -57,7 +68,9 @@ it("Should reset the state to initial", () => {
     wonLine: undefined,
     draw: false,
     turn: Player.X,
+    actionLogs: []
   };
   const nextState = playerReducer(state, { type: ActionType.START_OVER });
-  expect(nextState).toEqual(initialState);
+  const newState = {...initialState, sessionId: nextState.sessionId };
+  expect(nextState).toEqual(newState);
 });
