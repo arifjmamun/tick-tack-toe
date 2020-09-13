@@ -59,9 +59,7 @@ class Board extends React.Component<Props, BoardState> {
       sessionId: this.props.sessionId,
       moveNo,
       player: this.props.turn,
-      row,
-      isGameDraw: this.props.draw,
-      isGameOver: this.props.draw || !!this.props.won,
+      row
     };
 
     await this.props.addActionLog(log);

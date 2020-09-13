@@ -6,9 +6,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import configureStore from "./reducers/configure-store";
+import configuredStore from "./reducers/configure-store";
 
-const { store, persistor } = configureStore();
+const { store, persistor } = configuredStore;
 
 ReactDOM.render(
   <React.StrictMode>
