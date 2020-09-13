@@ -5,7 +5,7 @@ In the project directory, you can run:
 ## Docker
 
 ```bash
-# to start the api
+# to start the app
 $ docker-compose up
 
 # to shutdown the container
