@@ -5,19 +5,16 @@ import { Move } from "../types/move";
 import { XMove } from "./XMove";
 import { OMove } from "./OMove";
 import { BlankMove } from "./BlankMove";
-import { State } from "../reducers/playerReducer";
+import { State } from "../reducers/player-reducer";
 import { addMove } from "../actions/addMove";
 import { startOver } from "../actions/startOver";
-import { RootState } from "../reducers/rootReducer";
 import { Player } from "../types/player";
 
 export interface BoardProps {}
 
 export interface BoardState {}
 
-const mapStateToProps = (state: RootState) => ({
-  ...(state.player as State),
-});
+const mapStateToProps = (state: State) => state;
 
 const mapDispatchToProps = { addMove, startOver };
 

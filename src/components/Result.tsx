@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { RootState } from "../reducers/rootReducer";
-import { State } from "../reducers/playerReducer";
+import { State } from "../reducers/player-reducer";
 
-const mapStateToProps = (state: RootState) => ({
-  ...(state.player as State),
-});
+const mapStateToProps = (state: State) => state;
 
 type Props =  ReturnType<typeof mapStateToProps>;
 

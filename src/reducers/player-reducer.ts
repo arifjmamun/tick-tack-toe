@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import * as _ from "lodash";
 
 import { Player } from "../types/player";
@@ -6,7 +7,6 @@ import { Action, ActionType } from "../actions/actionType";
 import { AddMove } from "../actions/addMove";
 import { getPlayerResult } from "../utils/helper";
 import { Move } from "../types/move";
-import { Reducer } from "react";
 
 export interface State {
   board: Board;

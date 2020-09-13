@@ -1,4 +1,4 @@
-import { playerReducer, State, initialState } from "./playerReducer";
+import { playerReducer, State, initialState } from "./player-reducer";
 import { Move } from "../types/move";
 import { Player } from "../types/player";
 import { ActionType } from "../actions/actionType";
